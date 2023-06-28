@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { generateAccessToken } = require('../auth/generateTokens');
+const getUserInfo = require('../libs/getUserInfo')
 
 const Schema = mongoose.Schema;
 
@@ -39,11 +41,11 @@ userSchema.statics.comparePassword = async (password, receivedPassword) => {
 }
 
 userSchema.methods.createAccesToken = function () {
-    
+    return generateAccessToken(getUserInfo(this))
 }
 
 userSchema.methods.refreshToken = function () {
-
+    
 }
 
 
