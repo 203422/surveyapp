@@ -27,8 +27,25 @@ userSchema.statics.encryptPassword  = async (password) => {
     return await bcrypt.hash(password, salt)
 }
 
-userSchema.statics.comparePassword = async (password, receivedPassword) => {
-    return await bcrypt.compare(password, receivedPassword)
+userSchema.methods.userExist = async (email) => {
+    const result = await mongoose.model('User').findOne({ email })
+
+    return !! result;
 }
 
+userSchema.statics.comparePassword = async (password, receivedPassword) => {
+    const same = await bcrypt.compare(password, receivedPassword)
+    return same;
+}
+
+userSchema.methods.createAccesToken = function () {
+    
+}
+
+userSchema.methods.refreshToken = function () {
+
+}
+
+
+ 
 module.exports = mongoose.model('User', userSchema)
