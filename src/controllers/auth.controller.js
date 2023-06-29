@@ -1,7 +1,6 @@
 const User = require('../models/user');
-const jsonResponse = require('../libs/jsonResponse')
-
-const jwt = require('jsonwebtoken');
+const jsonResponse = require('../libs/jsonResponse');
+const getUserInfo = require('../libs/getUserInfo');
 
 const signUp = async (req, res) => {
 
@@ -35,14 +34,6 @@ const signUp = async (req, res) => {
             error: "Error al crear el usuario"
         }))
     }
-
-
-
-    // const token = jwt.sign({id: savedUser._id}, 'survey-blue-app', {
-    //     expiresIn: 86400 //24 horas
-    // })
-
-    // res.status(200).json({token})
 }
 
 const signIn = async (req, res) => {
@@ -61,11 +52,11 @@ const signIn = async (req, res) => {
 
         if (correctPassword) {
             //Autenticar usuario
-            const accesToken = user.createAccesToken();
-            const refreshToken = user.refreshToken();
+            const accessToken = user.createAccesToken();
+            const refreshToken = await user.refreshToken();
 
             res.status(200).json(jsonResponse(200, {
-                user, accesToken, refreshToken
+                user: getUserInfo(user), accessToken, refreshToken
             }))
         } else {
             res.status(400).json(jsonResponse(400, {
@@ -78,19 +69,6 @@ const signIn = async (req, res) => {
             error: "Usuario no encontrado"
         }))
     }
-
-
-    // const userFound = await userSchema.findOne({email})
-    // if (!userFound) return res.status(400).json({message: 'Usuario no encontrado'})
-
-    // if (!matchPassword) return res.status(401).json({token: null, message: 'Contraseña incorrecta'})
-
-    // const token = jwt.sign({id: userFound._id}, 'survey-blue-app', {
-    //     expiresIn: 86400 //24 horas
-    // })
-
-    // console.log(userFound)
-    // res.json({token})
 }
 
 module.exports = { signUp, signIn }
