@@ -41,11 +41,11 @@ userSchema.statics.comparePassword = async (password, receivedPassword) => {
     return same;
 }
 
-userSchema.methods.createAccesToken = () => {
+userSchema.methods.createAccesToken = function () {
     return generateAccessToken(getUserInfo(this))
 }
 
-userSchema.methods.refreshToken = async () => {
+userSchema.methods.refreshToken = async function() {
     const refreshToken = generateRefreshToken(getUserInfo(this));
     try {
 
