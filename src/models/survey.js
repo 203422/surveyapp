@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const surveySchema = new Schema({
     id: {
-        type: Object
+        type: String,
     },
     idUser: {
         type: String,
@@ -19,6 +19,11 @@ const surveySchema = new Schema({
         type: String,
         required: true
     },
+
+    questions: {
+        type: [],
+        required: true,
+    }
 },
     {
         timestamps: true
