@@ -10,9 +10,9 @@ const authRoutes = require('./routes/auth.routes')
 
 app.listen(port, () => console.log('Servidor ejecutandose en el puerto ', port))
 
-mongoose.connect('mongodb://localhost/surveydb',{useNewUrlParser: true,  useUnifiedTopology: true })
-    .then(db => console.log('Conectado a la base de datos'))
-    .catch(error => console.log(error))
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Conectado a la base de datos'))
+    .catch((error) => console.log(error))
 
 app.use(cors());
 app.use(express.json());
