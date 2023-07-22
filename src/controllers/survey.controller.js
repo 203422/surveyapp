@@ -132,7 +132,7 @@ const getAnswersById = async (req, res) => {
             const { uniqueAnswersOptionUnica, uniqueAnswersOptionMultiple, uniqueAnswersOptionOpen } = await getAnswerInfo(surveyId);
             res.json({ uniqueAnswersOptionUnica, uniqueAnswersOptionMultiple, uniqueAnswersOptionOpen });
         } else {
-            res.status(404).json({ error: 'Encuesta no encontrada' });
+            res.status(404).json({ error: 'Aun no hay respuestas' });
         }
     } catch (error) {
         console.error(error);
